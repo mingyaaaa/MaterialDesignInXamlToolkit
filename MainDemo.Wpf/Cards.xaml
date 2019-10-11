@@ -75,7 +75,7 @@
                         <materialDesign:PackIcon Kind="ShareVariant" />
                     </Button>
                     <StackPanel Grid.Row="1" Margin="8 24 8 4" >
-                        <TextBlock Style="{StaticResource MaterialDesignSubheadingTextBlock}" Margin="0">E.T. the Extra-Terrestrial</TextBlock>
+                        <TextBlock Style="{StaticResource MaterialDesignSubtitle1TextBlock}" Margin="0">E.T. the Extra-Terrestrial</TextBlock>
                         <Viewbox Margin="0 4 0 8" Height="16" HorizontalAlignment="Left">
                             <materialDesign:RatingBar Value="3" Orientation="Horizontal" Foreground="Gold" Margin="0" />
                         </Viewbox>
@@ -132,7 +132,7 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="0" Margin="16 16 16 4" Style="{StaticResource MaterialDesignHeadlineTextBlock}">Call Jennifer</TextBlock>
+                        <TextBlock Grid.Row="0" Margin="16 16 16 4" Style="{StaticResource MaterialDesignHeadline5TextBlock}">Call Jennifer</TextBlock>
                         <Separator Grid.Row="1" Style="{StaticResource MaterialDesignLightSeparator}"/>
                         <TextBlock Grid.Row="2" Margin="16 0 16 8" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource MaterialDesignBody2TextBlock}">March 19, 2016</TextBlock>
                         <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="16 0 16 8" HorizontalAlignment="Right">
@@ -177,6 +177,8 @@
                     <CheckBox Margin="16 4 16 0" Style="{StaticResource MaterialDesignUserForegroundCheckBox}">Do something good</CheckBox>
                     <CheckBox Margin="16 4 16 0" Style="{StaticResource MaterialDesignUserForegroundCheckBox}">Take a breather</CheckBox>
                     <CheckBox Margin="16 4 16 0" Style="{StaticResource MaterialDesignUserForegroundCheckBox}">And go create</CheckBox>
+                    <RadioButton Margin="16 4 16 0" Style="{DynamicResource MaterialDesignUserForegroundRadioButton}">This?</RadioButton>
+                    <RadioButton Margin="16 4 16 0" Style="{DynamicResource MaterialDesignUserForegroundRadioButton}">Or This?</RadioButton>
                     <Separator Style="{StaticResource MaterialDesignLightSeparator}"/>
                     <StackPanel Margin="8 0 8 8" Orientation="Horizontal" HorizontalAlignment="Right">
                         <Button HorizontalAlignment="Right" Style="{StaticResource MaterialDesignToolForegroundButton}" Width="30" Padding="2 0 0 0"
@@ -277,7 +279,7 @@
         </StackPanel>
 
         <smtx:XamlDisplay Key="cards_9" Margin="4 4 0 0" VerticalContentAlignment="Top">
-            <materialDesign:Flipper Style="{StaticResource MaterialDesignCardFlipper}">
+            <materialDesign:Flipper Style="{StaticResource MaterialDesignCardFlipper}" VerticalAlignment="Top">
                 <materialDesign:Flipper.FrontContent>
                     <Button Style="{StaticResource MaterialDesignFlatButton}"
                         Command="{x:Static materialDesign:Flipper.FlipCommand}"

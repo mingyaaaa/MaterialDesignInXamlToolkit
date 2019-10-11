@@ -26,7 +26,7 @@
                     Padding="8 0 8 0">
                 <Grid>
                     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <TextBlock TextWrapping="WrapWithOverflow" Style="{DynamicResource MaterialDesignSubheadingTextBlock}">Example 1.</TextBlock>
+                        <TextBlock TextWrapping="WrapWithOverflow" Style="{StaticResource MaterialDesignSubtitle1TextBlock}">Example 1.</TextBlock>
                         <TextBlock TextWrapping="WrapWithOverflow" >Simple definition within XAML. Use the toggle to display the message.</TextBlock>
                         <ToggleButton IsChecked="{Binding ElementName=SnackbarOne, Path=IsActive, Mode=TwoWay}"
                                       Margin="0 8 0 0"/>
@@ -47,7 +47,7 @@
                     Grid.Column="1" Grid.Row="0">
                 <Grid>
                     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <TextBlock TextWrapping="WrapWithOverflow" Style="{DynamicResource MaterialDesignSubheadingTextBlock}">Example 2.</TextBlock>
+                        <TextBlock TextWrapping="WrapWithOverflow" Style="{StaticResource MaterialDesignSubtitle1TextBlock}">Example 2.</TextBlock>
                         <TextBlock TextWrapping="WrapWithOverflow" >View source to see message defined in long hand, allowing action button content to be set.</TextBlock>
                         <ToggleButton IsChecked="{Binding ElementName=SnackbarTwo, Path=IsActive, Mode=TwoWay}"
                                       Margin="0 8 0 0" />
@@ -73,7 +73,7 @@
                     Padding="8 0 8 0" Grid.Row="0" Grid.Column="2">
                 <Grid>
                     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <TextBlock TextWrapping="WrapWithOverflow" Style="{DynamicResource MaterialDesignSubheadingTextBlock}">Example 3.</TextBlock>
+                        <TextBlock TextWrapping="WrapWithOverflow" Style="{StaticResource MaterialDesignSubtitle1TextBlock}">Example 3.</TextBlock>
                         <TextBlock TextWrapping="WrapWithOverflow">In many real world scenario, notification display must deal with threading, queuing, and potentially heavy usage. A MessageQueue can be set to handle much of this for you, gicing the following benefits:</TextBlock>
                         <TextBlock TextWrapping="WrapWithOverflow" Margin="0 8 0 0" Text=" • Messages can be queued from any thread"/>
                         <TextBlock TextWrapping="WrapWithOverflow" Text=" • Message will auto hide after a time out period"/>
@@ -108,8 +108,9 @@
                     Padding="8 0 8 0" Grid.Column="3" Grid.Row="0">
                 <Grid>
                     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <TextBlock TextWrapping="WrapWithOverflow" Style="{DynamicResource MaterialDesignSubheadingTextBlock}">Example 4.</TextBlock>
+                        <TextBlock TextWrapping="WrapWithOverflow" Style="{StaticResource MaterialDesignSubtitle1TextBlock}">Example 4.</TextBlock>
                         <TextBlock TextWrapping="WrapWithOverflow">Illustrates queueing (including discarding of duplicates), and handling of commands. Action a notification to see a System.Trace response..</TextBlock>
+                        <CheckBox Name="DiscardDuplicateCheckBox" IsChecked="True">Discard duplicates</CheckBox>
                         <Grid Margin="0 16 0 0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
@@ -134,7 +135,7 @@
                 <StackPanel VerticalAlignment="Bottom">
                     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"
                                 Margin="0 0 0 32">
-                        <TextBlock TextWrapping="WrapWithOverflow" Style="{DynamicResource MaterialDesignSubheadingTextBlock}">Example 5.</TextBlock>
+                        <TextBlock TextWrapping="WrapWithOverflow" Style="{StaticResource MaterialDesignSubtitle1TextBlock}">Example 5.</TextBlock>
                         <TextBlock TextWrapping="WrapWithOverflow">Illustrates a full width Snackbar.</TextBlock>
                         <ToggleButton IsChecked="{Binding ElementName=SnackbarFive, Path=IsActive, Mode=TwoWay}"
                                       Margin="0 8 0 0" />
@@ -161,7 +162,7 @@
                     </ResourceDictionary>
                 </Border.Resources>
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TextBlock TextWrapping="WrapWithOverflow" Style="{StaticResource MaterialDesignSubheadingTextBlock}">Example 6.</TextBlock>
+                    <TextBlock TextWrapping="WrapWithOverflow" Style="{StaticResource MaterialDesignSubtitle1TextBlock}">Example 6.</TextBlock>
                     <TextBlock TextWrapping="WrapWithOverflow">Action button colour variations.</TextBlock>
                     <smtx:XamlDisplay Key="snackbar_6" Margin="0 8 0 0">
                         <materialDesign:Snackbar IsActive="True">
@@ -186,6 +187,34 @@
                         </materialDesign:Snackbar>
                     </smtx:XamlDisplay>
                 </StackPanel>
+            </Border>
+
+            <!-- example 7 -->
+            <!-- message duration override -->
+            <Border Background="{DynamicResource MaterialDesignPaper}" 
+                    Padding="8 0 8 0" Grid.Column="3" Grid.Row="1">
+                <Grid>
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock TextWrapping="WrapWithOverflow" Style="{StaticResource MaterialDesignSubtitle1TextBlock}">Example 7.</TextBlock>
+                        <TextBlock TextWrapping="WrapWithOverflow">The message show duration is controlled by the message queue. But this can be overridden for a specific message.</TextBlock>
+                        <Grid Margin="0 16 0 0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Slider x:Name="MessageDurationOverrideSlider" Minimum="1" Maximum="10" Value="5"
+                                    IsSnapToTickEnabled="True" TickFrequency="0.1" VerticalAlignment="Center" />
+                            <TextBlock Text="{Binding ElementName=MessageDurationOverrideSlider, Path=Value, StringFormat={}{0:F1}}"
+                                       Margin="10,0" Grid.Column="1" VerticalAlignment="Center" />
+                            <Button Click="SnackBar7_OnClick" HorizontalAlignment="Center" Grid.Column="2">Send</Button>
+                        </Grid>
+                    </StackPanel>
+                    <smtx:XamlDisplay Key="snackbar_10">
+                        <materialDesign:Snackbar MessageQueue="{materialDesign:MessageQueue}"
+                                                 x:Name="SnackbarSeven" />
+                    </smtx:XamlDisplay>
+                </Grid>
             </Border>
         </Grid>
     </ScrollViewer>

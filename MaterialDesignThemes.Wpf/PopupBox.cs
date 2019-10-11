@@ -103,11 +103,17 @@ namespace MaterialDesignThemes.Wpf
         public const string PopupContentControlPartName = "PART_PopupContentControl";
         public const string PopupIsOpenStateName = "IsOpen";
         public const string PopupIsClosedStateName = "IsClosed";
+
+        /// <summary>
+        /// Routed command to be used inside of a popup content to close it.
+        /// </summary>
+        public static RoutedCommand ClosePopupCommand = new RoutedCommand();
+
         private PopupEx _popup;
         private ContentControl _popupContentControl;
         private ToggleButton _toggleButton;
         private Point _popupPointFromLastRequest;
-        private Point _lastRelativePositon;
+        private Point _lastRelativePosition;
 
         static PopupBox()
         {
@@ -310,6 +316,36 @@ namespace MaterialDesignThemes.Wpf
         }
 
         /// <summary>
+        /// Get or sets the popup horizontal offset in relation to the button.
+        /// </summary>
+        public static readonly DependencyProperty PopupHorizontalOffsetProperty = DependencyProperty.Register(
+            nameof(PopupHorizontalOffset), typeof(double), typeof(PopupBox), new PropertyMetadata(default(double)));
+
+        /// <summary>
+        /// Get or sets the popup horizontal offset in relation to the button.
+        /// </summary>
+        public double PopupHorizontalOffset
+        {
+            get { return (double)GetValue(PopupHorizontalOffsetProperty); }
+            set { SetValue(PopupHorizontalOffsetProperty, value); }
+        }
+
+        /// <summary>
+        /// Get or sets the popup vertical offset in relation to the button.
+        /// </summary>
+        public static readonly DependencyProperty PopupVerticalOffsetProperty = DependencyProperty.Register(
+            nameof(PopupVerticalOffset), typeof(double), typeof(PopupBox), new PropertyMetadata(default(double)));
+
+        /// <summary>
+        /// Get or sets the popup vertical offset in relation to the button.
+        /// </summary>
+        public double PopupVerticalOffset
+        {
+            get { return (double)GetValue(PopupVerticalOffsetProperty); }
+            set { SetValue(PopupVerticalOffsetProperty, value); }
+        }
+
+        /// <summary>
         /// Framework use. Provides the method used to position the popup.
         /// </summary>
         public CustomPopupPlacementCallback PopupPlacementMethod => GetPopupPlacement;
@@ -367,7 +403,7 @@ namespace MaterialDesignThemes.Wpf
                 typeof(PopupBox));
 
         /// <summary>
-        /// Raised when the popup is opened.
+        /// Raised when the popup is closed.
         /// </summary>
         public event RoutedEventHandler Closed
         {
@@ -386,8 +422,6 @@ namespace MaterialDesignThemes.Wpf
 
         public override void OnApplyTemplate()
         {
-            if (_popup != null)
-                _popup.Loaded -= PopupOnLoaded;
             if (_toggleButton != null)
                 _toggleButton.PreviewMouseLeftButtonUp -= ToggleButtonOnPreviewMouseLeftButtonUp;
 
@@ -397,8 +431,8 @@ namespace MaterialDesignThemes.Wpf
             _popupContentControl = GetTemplateChild(PopupContentControlPartName) as ContentControl;
             _toggleButton = GetTemplateChild(TogglePartName) as ToggleButton;
 
-            if (_popup != null)
-                _popup.Loaded += PopupOnLoaded;
+            _popup?.CommandBindings.Add(new CommandBinding(ClosePopupCommand, ClosePopupHandler));
+
             if (_toggleButton != null)
                 _toggleButton.PreviewMouseLeftButtonUp += ToggleButtonOnPreviewMouseLeftButtonUp;
 
@@ -409,7 +443,7 @@ namespace MaterialDesignThemes.Wpf
         {
             base.OnIsKeyboardFocusWithinChanged(e);
 
-            if (IsPopupOpen && !IsKeyboardFocusWithin)
+            if (IsPopupOpen && !IsKeyboardFocusWithin && !StaysOpen)
             {
                 Close();
             }
@@ -444,16 +478,21 @@ namespace MaterialDesignThemes.Wpf
             base.OnMouseEnter(e);
         }
 
+        private void ClosePopupHandler(object sender, ExecutedRoutedEventArgs executedRoutedEventArgs)
+        {
+            IsPopupOpen = false;
+        }
+
         private void OnLayoutUpdated(object sender, EventArgs eventArgs)
         {
             if (_popupContentControl != null && _popup != null &&
                 (PopupMode == PopupBoxPopupMode.MouseOver || PopupMode == PopupBoxPopupMode.MouseOverEager))
             {
                 Point relativePosition = _popupContentControl.TranslatePoint(new Point(), this);
-                if (relativePosition != _lastRelativePositon)
+                if (relativePosition != _lastRelativePosition)
                 {
                     _popup.RefreshPosition();
-                    _lastRelativePositon = _popupContentControl.TranslatePoint(new Point(), this);
+                    _lastRelativePosition = _popupContentControl.TranslatePoint(new Point(), this);
                 }
             }
         }
@@ -465,7 +504,7 @@ namespace MaterialDesignThemes.Wpf
 
                 Close();
 
-            base.OnMouseEnter(e);
+            base.OnMouseLeave(e);
         }
 
         protected void Close()
@@ -725,12 +764,6 @@ namespace MaterialDesignThemes.Wpf
         }
 
         #endregion
-
-        private void PopupOnLoaded(object sender, RoutedEventArgs routedEventArgs)
-        {
-            if (PopupMode == PopupBoxPopupMode.MouseOverEager)
-                _popup.IsOpen = true;
-        }
 
         private void ToggleButtonOnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs mouseButtonEventArgs)
         {

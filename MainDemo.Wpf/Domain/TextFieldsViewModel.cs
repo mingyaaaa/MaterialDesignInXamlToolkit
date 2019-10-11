@@ -2,17 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MaterialDesignColors.WpfExample.Domain
 {
     public class TextFieldsViewModel : INotifyPropertyChanged
     {
         private string _name;
+        private string _name2;
         private int? _selectedValueOne;
         private string _selectedTextTwo;
 
@@ -30,6 +26,15 @@ namespace MaterialDesignColors.WpfExample.Domain
             set
             {
                 this.MutateVerbose(ref _name, value, RaisePropertyChanged());
+            }
+        }
+
+        public string Name2
+        {
+            get { return _name2; }
+            set
+            {
+                this.MutateVerbose(ref _name2, value, RaisePropertyChanged());
             }
         }
 
